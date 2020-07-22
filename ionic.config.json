@@ -1,0 +1,7 @@
+{
+  "name": "LocalFoods-local",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
