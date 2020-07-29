@@ -1,9 +1,79 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>home</ion-title>
-  </ion-toolbar>
+    <ion-toolbar *ngIf="localinfo">
+        <ion-buttons slot="start" [routerLink]="['/home']">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title class="ion-text-center"> {{ localinfo.name }} </ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="localinfo">
+    <ion-img class="ion-padding"
+        src="https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2020/03/licuado-de-frutos-rojos-con-leche-de-almendra.jpg">
+    </ion-img>
 
+
+    <div class="ion-text-center ion-padding">
+        <ion-text> {{ localinfo.description }} </ion-text>
+    </div>
+    <ion-card>
+        <ion-card-content>
+
+            <ion-item>
+                <ion-title class="ion-no-padding" color="dark">Direccion</ion-title>
+                <ion-text> {{ localinfo.address }} </ion-text>
+                <ion-icon name="navigate-circle" slot="end"></ion-icon>
+            </ion-item>
+            <ion-item>
+                <ion-title class="ion-no-padding" color="dark">Horario</ion-title>
+                <ion-text> {{localinfo.horary}} </ion-text>
+                <ion-icon name="timer" slot="end"></ion-icon>
+            </ion-item>
+            <ion-item>
+                <ion-title class="ion-no-padding" color="dark">Telefono</ion-title>
+                <ion-text> {{localinfo.tel}} </ion-text>
+                <ion-icon name="call" slot="end"></ion-icon>
+            </ion-item>
+
+        </ion-card-content>
+    </ion-card>
+
+    <div id="map">
+
+    </div>
+
+    <ion-button color="tertiary" [routerLink]="['menu']">Agregar menu</ion-button>
+
+    <div>
+        <ion-list>
+            <ion-list-header  lines="inset" color="light">
+                <ion-title>Menu</ion-title>
+                <ion-button class="ion-margin" fill="solid" color="success">Editar</ion-button>
+            </ion-list-header>
+            <ion-item>
+
+                <ion-text color="secondary" slot="start">
+                    $155
+                </ion-text>
+                <ion-label>
+                    Pizza Hawaiana
+                </ion-label>
+
+            </ion-item>
+            <ion-item>
+                <ion-text slot="start">
+                    $145
+                </ion-text>
+                <ion-label>
+                    Pizza Peperroni
+                </ion-label>
+            </ion-item>
+        </ion-list>
+    </div>
+
+
+
+    <ion-footer class="ion-text-center ion-padding">
+        
+    </ion-footer>
 </ion-content>

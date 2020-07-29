@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',   //redirectTo: 'folder/Inbox',
+    redirectTo: 'home',   //redirectTo: 'folder/Inbox',
     pathMatch: 'full'
   },
   {

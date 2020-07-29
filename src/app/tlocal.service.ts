@@ -9,26 +9,26 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 export class TlocalService {
 
   url = "http://localhost:5000/api/"
-  urlProxy= '/api/'
+  urlProxy= '/api/local/'
   constructor(private http:HttpClient) { }
 
-  
-  sendRegister(datos: DataLocal){
-    let headers = new HttpHeaders().set('Content-Type','application/json');
-    let data = JSON.stringify(datos)
+  headers = new HttpHeaders().set('Content-Type','application/json');
 
-    return this.http.post(this.urlProxy+'local', data, { headers: headers})
+  sendRegister(datos: DataLocal){
+    let data = JSON.stringify(datos)
+    return this.http.post(this.urlProxy+'register', data, { headers: this.headers})
 
   }
   sendLogin(datos: LoginModel){
-    let headers = new HttpHeaders().set('Content-Type','application/json');
     let data = JSON.stringify(datos)
-
-    return this.http.post(this.urlProxy+'login', data, { headers: headers})
+    return this.http.post(this.urlProxy+'login', data, { headers: this.headers})
   }
   
+  findLocal(id: string ) {
+    return this.http.get(this.urlProxy+id)
+  }
   
-  
+
   uploadImage(base46: string){
     let data = {
       dataImage: base46,

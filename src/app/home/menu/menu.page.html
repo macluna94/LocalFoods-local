@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Menu</ion-title>
+    <ion-button slot="end" color="success" (click)="alertAddItem()">
+      <ion-icon name="add-circle-sharp"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="itemList">
+    <ion-list>
+      <ion-list-header class="ion-text-center" color="primary">
+        <ion-title>Menu</ion-title>
+      </ion-list-header>
+      <ion-item *ngFor="let item of itemList">
+        <ion-text color="success" slot="start">
+          <strong>
+            $ {{item.price}}
+          </strong>
+        </ion-text>
+        <ion-label> {{item.name}} | {{item.id}} </ion-label>
+        <ion-buttons slot="end">
+          <ion-button color="warning" (click)="alertEditItem(item.id)">
+            <ion-icon name="pencil"></ion-icon>
+          </ion-button>
+          <ion-button color="danger" (click)="alertDeleteItem(item.id, item.name)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+  </div>
+  <ion-footer class="ion-text-center">
+    <ion-button (click)="saveMenu()" strong color="secondary" shape="round">Guardar</ion-button>
+  </ion-footer>
+</ion-content>
