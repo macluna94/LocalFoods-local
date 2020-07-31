@@ -50,23 +50,18 @@
                 <ion-title>Menu</ion-title>
                 <ion-button class="ion-margin" fill="solid" color="success">Editar</ion-button>
             </ion-list-header>
-            <ion-item>
+            <ion-item *ngFor="let item of localinfo.menu">
 
                 <ion-text color="secondary" slot="start">
-                    $155
+                    $ {{ item.price }} 
+                    <span>
+                        mxn
+                    </span>
                 </ion-text>
-                <ion-label>
-                    Pizza Hawaiana
+                <ion-label class="ion-text-justify">
+                   {{ item.name }} 
                 </ion-label>
 
-            </ion-item>
-            <ion-item>
-                <ion-text slot="start">
-                    $145
-                </ion-text>
-                <ion-label>
-                    Pizza Peperroni
-                </ion-label>
             </ion-item>
         </ion-list>
     </div>

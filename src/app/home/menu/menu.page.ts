@@ -1,3 +1,5 @@
+import { menuModel } from './../../menuModel';
+import { TlocalService } from './../../tlocal.service';
 import { Router } from '@angular/router';
 import { Component, OnInit} from '@angular/core';
 import { AlertController} from '@ionic/angular';
@@ -8,53 +10,51 @@ import { AlertController} from '@ionic/angular';
   styleUrls: ['./menu.page.scss'],
 })
 export class MenuPage implements OnInit {
-  itemList = [{
-      id: 0,
-      name: "Chocoroles",
-      price: 15
-    },
-    {
-      id: 1,
-      name: "Gansito",
-      price: 10
-    }, {
-      id: 2,
-      name: "Pinguinos",
-      price: 16
-    }, {
-      id: 3,
-      name: "Vianetta",
-      price: 45
-    }, {
-      id: 4,
-      name: "Pollo Completo",
-      price: 250
-    }
-  ]
+  itemList: any = []
+  localinfo: any = {};
+  datos: any = {}
+  idUser ="5f20bc5068f149c29e38403c"
 
-
-  constructor(public alertCtrl: AlertController, private router: Router) {}
+  constructor(public alertCtrl: AlertController, private tlocalService: TlocalService,private router: Router) {}
 
   ngOnInit() {
 
-
+   this.loadData()
   }
+
+  /*
+  ionViewWillEnter() {
+  this.tlocalService.findLocal('5f20bc5068f149c29e38403c').subscribe(data => {
+    this.localinfo = data
+    this.itemList = this.localinfo.menu
+    console.log(this.itemList);
+  });
+  }
+  */
+
+
+  async loadData(){
+    await this.tlocalService.findLocal(this.idUser).subscribe(data => {
+      this.localinfo = data
+      this.itemList = this.localinfo.local.menu
+      //console.log(this.localinfo.local.menu);
+    });
+  }
+
+
+
 
   async alertAddItem() {
     let alert = await this.alertCtrl.create({
       header: 'Nuevo Platillo',
       subHeader: 'Agrega el nombre y el precio',
-      inputs: [{
-          name: "id",
-          type: 'number',
-          placeholder: "id"
-        },
+      inputs: [
         {
-          name: "nombre",
+          name: "name",
           type: 'text',
           placeholder: "Nombre del producto"
         }, {
-          name: "precio",
+          name: "price",
           type: 'number',
           placeholder: "$20.50"
         },
@@ -65,13 +65,13 @@ export class MenuPage implements OnInit {
         {
           text: 'Guardar',
           handler: (data) => {
-
-            if (data.nombre != '' && data.precio != '') {
+            let i = data.name.length * 3 * data.price;
+            if (data.name != '' && data.price != '') {
               console.log(data);
               this.itemList.push({
-                id: data.id,
-                name: data.nombre,
-                price: data.precio
+                _id: i,
+                name: data.name,
+                price: data.price
               })
             } else {
               alert.dismiss()
@@ -85,17 +85,17 @@ export class MenuPage implements OnInit {
     await alert.present()
   }
 
-  async alertDeleteItem(id: number) {
-    let itemid = this.itemList.find(ele => {
-      return ele.id === id
+  async alertDeleteItem(id: string) {
+    let item = this.itemList.find(ele => {
+      return ele._id === id
     })
 
-    console.log(itemid)
+    //console.log(item)
 
     let alert = await this.alertCtrl.create({
       header: 'Eliminar item',
       subHeader: '¿Estas seguro de elimnar?',
-      message: itemid.name,
+      message: item.name,
       buttons: [{
         text: 'Cancelar',
         handler: () => {
@@ -104,16 +104,15 @@ export class MenuPage implements OnInit {
       }, {
         text: 'Eliminar',
         handler: () => {
-          console.log(itemid.name + ' eliminado');
-          console.log("Item to delete: " + id);
+          //console.log(item.name + ' eliminado');
 
           this.itemList = this.itemList.filter(lugar => {
-            console.log(lugar.id);
-            return lugar.id !== itemid.id
+            
+            //console.log(lugar._id);
+            return lugar._id !== item._id
+
           })
-          console.log(
-            this.itemList
-          )
+          //console.log(this.itemList)
         }
       }]
     })
@@ -122,26 +121,24 @@ export class MenuPage implements OnInit {
   }
 
   async alertEditItem(id: number) {
-    let itemid = this.itemList.find(ele => {
-      return ele.id === id
+    let item = this.itemList.find(ele => {
+      return ele._id === id
     })
+    console.log(item._id);
+    
 
     let alert = await this.alertCtrl.create({
       header: 'Editar item',
       subHeader: 'Cambia los datos y selecciona "Guardar"',
-      inputs: [{
-          name: 'id',
-          value: itemid.id,
-          type: 'number'
-        },
+      inputs: [
         {
-          name: 'nombre',
-          value: itemid.name,
+          name: 'name',
+          value: item.name,
           type: 'text'
         },
         {
-          name: 'precio',
-          value: itemid.price,
+          name: 'price',
+          value: item.price,
           type: 'number'
         }
       ],
@@ -152,10 +149,9 @@ export class MenuPage implements OnInit {
 
           if (data.nombre != '' && data.precio != '') {
             this.itemList.find(ele => {
-              if (ele.id === id) {
-                ele.id = data.id
-                ele.name = data.nombre
-                ele.price = data.precio
+              if (ele._id === id) {
+                ele.name = data.name
+                ele.price = data.price
               }
             })
             console.log(data);
@@ -169,6 +165,22 @@ export class MenuPage implements OnInit {
     alert.present()
   }
 
-  saveMenu() {}
+  saveMenu() {
+    let menu = []
+    for(let item of this.itemList){
+      console.log(item.name);
+      menu.push({
+        name: item.name,
+        price: item.price
+      })
+    }
+    console.log(menu);
+    
+    this.tlocalService.updateMenu(this.idUser, menu ).subscribe(resp => {
+      console.log(resp);
+      this.router.navigate(['/home'])
+    })
+    
+  }
 
 }

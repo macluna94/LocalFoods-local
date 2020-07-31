@@ -28,6 +28,12 @@ export class TlocalService {
     return this.http.get(this.urlProxy+id)
   }
   
+  updateMenu(id: string, data: any){
+    let datos = JSON.stringify(data)
+    return this.http.post(this.urlProxy+'updatemenu/'+id, datos, {headers: this.headers})
+  }
+
+
 
   uploadImage(base46: string){
     let data = {

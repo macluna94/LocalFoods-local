@@ -21,12 +21,12 @@
             $ {{item.price}}
           </strong>
         </ion-text>
-        <ion-label> {{item.name}} | {{item.id}} </ion-label>
+        <ion-label> {{item.name}} | {{item._id}} </ion-label>
         <ion-buttons slot="end">
-          <ion-button color="warning" (click)="alertEditItem(item.id)">
+          <ion-button color="warning" (click)="alertEditItem(item._id)">
             <ion-icon name="pencil"></ion-icon>
           </ion-button>
-          <ion-button color="danger" (click)="alertDeleteItem(item.id, item.name)">
+          <ion-button color="danger" (click)="alertDeleteItem(item._id, item.name)">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-buttons>
