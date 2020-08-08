@@ -1,9 +1,9 @@
 <ion-header>
     <ion-toolbar *ngIf="localinfo">
-        <ion-buttons slot="start" [routerLink]="['/home']">
-            <ion-back-button></ion-back-button>
-        </ion-buttons>
         <ion-title class="ion-text-center"> {{ localinfo.name }} </ion-title>
+        <ion-button slot="end" [routerLink]="['/login']" class="ion-margin">
+            <ion-icon name="log-out-outline"></ion-icon>
+        </ion-button>
     </ion-toolbar>
 </ion-header>
 
@@ -42,13 +42,12 @@
 
     </div>
 
-    <ion-button color="tertiary" [routerLink]="['menu']">Agregar menu</ion-button>
 
     <div>
         <ion-list>
             <ion-list-header  lines="inset" color="light">
                 <ion-title>Menu</ion-title>
-                <ion-button class="ion-margin" fill="solid" color="success">Editar</ion-button>
+                <ion-button class="ion-margin" fill="solid" color="success" [routerLink]="['menu']">Editar</ion-button>
             </ion-list-header>
             <ion-item *ngFor="let item of localinfo.menu">
 
