@@ -17,9 +17,13 @@ export class MenuPage implements OnInit {
 
   constructor(public alertCtrl: AlertController, private tlocalService: TlocalService,private router: Router) {}
 
-  ngOnInit() {
+  id: string
 
-   this.loadData()
+  ngOnInit() {
+    
+    this.id = this.router.getCurrentNavigation().extras.state.data.id
+
+   this.loadData(this.id)
   }
 
   /*
@@ -33,12 +37,13 @@ export class MenuPage implements OnInit {
   */
 
 
-  async loadData(){
-    await this.tlocalService.findLocal(this.idUser).subscribe(data => {
+  async loadData(id: string){
+    await this.tlocalService.findLocal(id).subscribe(data => {
       this.localinfo = data
       this.itemList = this.localinfo.local.menu
       //console.log(this.localinfo.local.menu);
     });
+    
   }
 
 
@@ -168,7 +173,7 @@ export class MenuPage implements OnInit {
   saveMenu() {
     let menu = []
     for(let item of this.itemList){
-      console.log(item.name);
+      //console.log(item.name);
       menu.push({
         name: item.name,
         price: item.price
@@ -176,7 +181,7 @@ export class MenuPage implements OnInit {
     }
     console.log(menu);
     
-    this.tlocalService.updateMenu(this.idUser, menu ).subscribe(resp => {
+    this.tlocalService.updateMenu(this.id, menu ).subscribe(resp => {
       console.log(resp);
       this.router.navigate(['/home'])
     })

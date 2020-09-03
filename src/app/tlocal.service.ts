@@ -30,6 +30,8 @@ export class TlocalService {
   
   updateMenu(id: string, data: any){
     let datos = JSON.stringify(data)
+    console.log(id+"    "+datos);
+    
     return this.http.post(this.urlProxy+'updatemenu/'+id, datos, {headers: this.headers})
   }
 

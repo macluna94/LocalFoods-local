@@ -37,10 +37,16 @@ export class LoginPage implements OnInit {
       let datos = this.loginForm.value
       this.tlocalServices.sendLogin(datos).subscribe(result => {
         this.resp = result
-        console.log(this.resp.usuario.usuario);
+        let usuario = this.resp.usuario.usuario
+        let idusuario = this.resp.usuario._id
+        console.log(usuario +"\n"+idusuario);
         
         this.checkToast('Bienvenido',this.resp.usuario.usuario, 'primary')
-        this.router.navigate(['/home'])
+        this.router.navigate(['/home'],{ state: 
+          {data: {
+          id: idusuario,
+          usuario: usuario
+        }}})
         
       }, err => {
         this.resp = err

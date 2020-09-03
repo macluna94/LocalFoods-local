@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="login"></ion-back-button>
+      <ion-back-button [routerLink]="['home']"></ion-back-button>
     </ion-buttons>
     <ion-title>Menu</ion-title>
     <ion-button slot="end" color="success" (click)="alertAddItem()">
@@ -9,7 +9,7 @@
     </ion-button>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content mode="ios" >
   <div *ngIf="itemList">
     <ion-list>
       <ion-list-header class="ion-text-center" color="primary">
@@ -21,7 +21,7 @@
             $ {{item.price}}
           </strong>
         </ion-text>
-        <ion-label> {{item.name}} | {{item._id}} </ion-label>
+        <ion-label> {{item.name}} </ion-label>
         <ion-buttons slot="end">
           <ion-button color="warning" (click)="alertEditItem(item._id)">
             <ion-icon name="pencil"></ion-icon>

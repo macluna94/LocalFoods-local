@@ -43,21 +43,19 @@
     </div>
 
 
-    <div>
+    <div class="ion-padding">
         <ion-list>
             <ion-list-header  lines="inset" color="light">
                 <ion-title>Menu</ion-title>
-                <ion-button class="ion-margin" fill="solid" color="success" [routerLink]="['menu']">Editar</ion-button>
+                <ion-button class="ion-margin" fill="solid" color="success" (click)="goMenu()">Editar</ion-button>
             </ion-list-header>
             <ion-item *ngFor="let item of localinfo.menu">
 
-                <ion-text color="secondary" slot="start">
+                <ion-text color="success" slot="start">
                     $ {{ item.price }} 
-                    <span>
-                        mxn
-                    </span>
+                    
                 </ion-text>
-                <ion-label class="ion-text-justify">
+                <ion-label class="ion-text-right">
                    {{ item.name }} 
                 </ion-label>
 
